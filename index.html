@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entries</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-900 min-h-screen flex flex-col">
+
+    <header class="bg-indigo-700 text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold tracking-wide cursor-pointer" id="brand-home">Entries</span>
+                </div>
+
+                <nav class="hidden md:flex space-x-4">
+                    <button id="nav-client-desk" data-target="tab-client"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 text-indigo-100 transition">Add
+                        Client</button>
+                    <button id="nav-hearingnotes-desk" data-target="tab-hearingnotes"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 text-indigo-100 transition">Hearing
+                        Notes</button>
+                    <button id="nav-upcomingcases-desk" data-target="tab-upcomingcases"
+                        class="tab-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-600 text-indigo-100 transition">Upcoming
+                        Cases</button>
+                </nav>
+
+                <div class="flex md:hidden items-center">
+                    <button id="hamburger-btn" type="button"
+                        class="p-2 rounded-md text-indigo-200 hover:text-white hover:bg-indigo-600 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-indigo-800 px-4 pt-2 pb-3 space-y-1 shadow-inner">
+            <button id="nav-client-mob" data-target="tab-client"
+                class="tab-btn-mob block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700 text-indigo-100">Add
+                Client</button>
+            <button id="nav-hearingnotes-mob" data-target="tab-hearingnotes"
+                class="tab-btn-mob block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700 text-indigo-100">Hearing
+                Notes</button>
+            <button id="nav-upcomingcases-mob" data-target="tab-upcomingcases"
+                class="tab-btn-mob block w-full text-left px-3 py-2 rounded-md text-base font-medium hover:bg-indigo-700 text-indigo-100">Upcoming
+                Cases</button>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Home Tab -->
+        <section id="tab-home" class="tab-content text-center py-16">
+            <h2 class="text-3xl font-extrabold text-slate-700 tracking-tight">Choose appropriate menu :)</h2>
+            <p class="mt-2 text-sm text-slate-500">Select an option from the navigation bar or menu above to get
+                started.</p>
+        </section>
+
+        <!-- Add Client Tab -->
+        <section id="tab-client"
+            class="tab-content hidden p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-md space-y-4">
+            <h2 class="text-2xl font-bold text-gray-800">Add Client Form</h2>
+            <form id="client-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="client-name"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                        placeholder="Enter Full Name" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input type="tel" id="client-mobile"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                        placeholder="Enter Phone Number" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email ID</label>
+                    <input type="email" id="client-email"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                        placeholder="Enter Email ID" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Meeting Notes</label>
+                    <textarea id="client-notes" rows="3"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                        placeholder="Enter Meeting Notes"></textarea>
+                </div>
+                <div class="flex space-x-4">
+                    <button type="submit" id="submit-client-btn"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Save</button>
+                    <button type="reset"
+                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400">Clear</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Hearing Notes Tab -->
+        <section id="tab-hearingnotes"
+            class="tab-content hidden bg-white shadow rounded-lg p-6 max-w-4xl mx-auto w-full">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Case Notes Management</h2>
+            <p class="text-slate-600 mb-6">Log and update hearing notes, track case and CNR numbers, and manage next
+                dates.</p>
+
+            <form class="space-y-4 max-w-xl">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Case Number</label>
+                    <select id="hearing-case-number"
+                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm border p-2 bg-white focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="" disabled selected>Choose from below...</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">CNR Number</label>
+                    <select id="hearing-cnr-number"
+                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm border p-2 bg-white focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="" disabled selected>Choose from below...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Next Date</label>
+                    <input type="text" id="hearing-next-date"
+                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm border p-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="DD/MM/YYYY or select date">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Stage</label>
+                    <input type="text" id="hearing-stage"
+                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm border p-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="e.g. Arguments / Evidence">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-700">Business</label>
+                    <textarea rows="3" id="hearing-business"
+                        class="mt-1 block w-full rounded-md border-slate-300 shadow-sm border p-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Enter business details or context..."></textarea>
+                </div>
+
+                <div class="flex space-x-3 pt-2">
+                    <button type="button" id="clear-hearingnotes-btn"
+                        class="bg-slate-200 text-slate-700 px-4 py-2 rounded-md hover:bg-slate-300 transition">Clear</button>
+                    <button type="submit" id="save-hearing-notes-btn"
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">Update
+                        Notes</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Upcoming Cases Tab -->
+        <section id="tab-upcomingcases"
+            class="tab-content hidden p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-md space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+                <h2 class="text-2xl font-bold text-gray-800">Upcoming Cases (Next 8 Days)</h2>
+                <button type="button" id="refresh-upcoming-btn"
+                    class="text-sm bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-md hover:bg-indigo-100 transition font-medium">
+                    🔄 Refresh
+                </button>
+            </div>
+
+            <div class="overflow-x-auto rounded-md border border-gray-200">
+                <table class="w-full text-left border-collapse text-sm text-gray-700">
+                    <thead class="bg-gray-100 text-gray-700 font-semibold uppercase text-xs tracking-wider">
+                        <tr>
+                            <th class="p-3 border-b text-center w-16">S.No</th>
+                            <th class="p-3 border-b">Case Number</th>
+                            <th class="p-3 border-b">Stage</th>
+                            <th class="p-3 border-b text-right">Next Hearing Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="upcoming-cases-tbody" class="divide-y divide-gray-200">
+                        <tr>
+                            <td colspan="4" class="p-6 text-center text-gray-400">
+                                Click tab to load upcoming cases...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-sm text-slate-500">
+        &copy; 2026 Entries. All rights reserved.
+    </footer>
+
+    <script>
+        // Global cache for today's hearing rows to handle two-way lookup
+        var todayHearingData = [];
+
+        // Variable to store Google Apps Script Web App URL (Single Source of Truth)
+        const webAppUrl = 'https://script.google.com/macros/s/AKfycbx5WkdJ4Cwh9btsSkg5a-WAgzYD_ZHYtiIiBMWS9dGiI2DuxD9Ty3a5g_WxU9PHH8qpMQ/exec';
+
+        $(document).ready(function () {
+            // Fetch preloaded data for today's Indian date on page load
+            fetchTodayHearingNotesData();
+
+            // Toggle Mobile Menu
+            $('#hamburger-btn').on('click', function () {
+                $('#mobile-menu').toggleClass('hidden');
+            });
+
+            // Unified Tab Switching Functionality
+            function switchTab(targetId) {
+                // Hide all tab contents
+                $('.tab-content').addClass('hidden');
+
+                // Show target tab content
+                $('#' + targetId).removeClass('hidden');
+
+                // Reset styles for desktop buttons
+                $('.tab-btn').removeClass('bg-indigo-800 text-white').addClass('hover:bg-indigo-600 text-indigo-100');
+
+                // Reset styles for mobile buttons
+                $('.tab-btn-mob').removeClass('bg-indigo-900 text-white').addClass('hover:bg-indigo-700 text-indigo-100');
+
+                // Determine active menu name to highlight correctly
+                let activeKey = '';
+                if (targetId === 'tab-client') activeKey = 'client';
+                if (targetId === 'tab-hearingnotes') activeKey = 'hearingnotes';
+                if (targetId === 'tab-upcomingcases') activeKey = 'upcomingcases';
+                // if (targetId === 'tab-third') activeKey = 'third'; // Third menu key placeholder
+
+                // Highlight active desktop and mobile buttons if not home
+                if (activeKey) {
+                    $('#nav-' + activeKey + '-desk').removeClass('hover:bg-indigo-600 text-indigo-100').addClass('bg-indigo-800 text-white');
+                    $('#nav-' + activeKey + '-mob').removeClass('hover:bg-indigo-700 text-indigo-100').addClass('bg-indigo-900 text-white');
+                }
+
+                // Close mobile menu after clicking on mobile view
+                $('#mobile-menu').addClass('hidden');
+            }
+
+            // Clicking brand/logo resets view back to Home
+            $('#brand-home').on('click', function () {
+                switchTab('tab-home');
+            });
+
+            /* =====================================================================
+               EVENT HANDLING FOR THE MENUS:
+               1. Add Client Menu
+               2. Hearing Notes Menu
+               3. Upcoming Cases Menu
+               4. Third Menu Entry
+               ===================================================================== */
+
+            // 1. Event handling for "Add Client" menu entry (Desktop & Mobile)
+            $('#nav-client-desk, #nav-client-mob').on('click', function () {
+                switchTab('tab-client');
+            });
+
+            // 2. Event handling for "Hearing Notes" menu entry (Desktop & Mobile)
+            $('#nav-hearingnotes-desk, #nav-hearingnotes-mob').on('click', function () {
+                switchTab('tab-hearingnotes');
+            });
+
+            // 3. Event handling for "Upcoming Cases" menu entry (Desktop & Mobile)
+            $('#nav-upcomingcases-desk, #nav-upcomingcases-mob').on('click', function () {
+                switchTab('tab-upcomingcases');
+                loadUpcomingCases(); // Automatically fetch/refresh data when switched
+            });
+
+            // 4. Event handling for the Third Menu Entry (Desktop & Mobile)
+            /*
+            $('#nav-third-desk, #nav-third-mob').on('click', function() {
+                switchTab('tab-third');
+            });
+            */
+
+            // Clear button logic for the Hearing Notes tab form
+            $('#clear-hearingnotes-btn').on('click', function () {
+                $('#tab-hearingnotes form')[0].reset();
+            });
+
+            // Post new Client
+            $('#client-form').on('submit', function (e) {
+                e.preventDefault();
+
+                let clientData = {
+                    action: "addClient",
+                    fullName: $('#client-name').val(),
+                    phoneNumber: $('#client-mobile').val(),
+                    emailId: $('#client-email').val(),
+                    meetingNotes: $('#client-notes').val()
+                };
+
+                $.ajax({
+                    url: "https://script.google.com/macros/s/AKfycbxv0JVSBFPq-3aZkwyzrswwpVgXGqOwpqwNEhsClZUZ84CW_vwCB5w7V_GkV51A385n/exec",
+                    type: "POST",
+                    dataType: "text", // Prevents strict JSON parsing errors on cross-origin redirects
+                    contentType: "text/plain;charset=utf-8", // Bypasses the CORS preflight OPTIONS block
+                    data: JSON.stringify(clientData),
+                    success: function (response) {
+                        alert("Client saved successfully!");
+                        $('#client-form')[0].reset();
+                    },
+                    error: function (err) {
+                        console.error("Error saving client data", err);
+                        alert("Failed to submit client data.");
+                    }
+                });
+            });
+
+            // AJAX Submission for Hearing Notes Form
+            $('#save-hearing-notes-btn').on('click', function (e) {
+                e.preventDefault();   // Stops the form from reloading the page / going home
+                e.stopPropagation();
+
+                // Bundle the payload explicitly including business and stage
+                var formData = {
+                    nextDate: $('#hearing-next-date').val(),
+                    business: $('#hearing-business').val(),
+                    stage: $('#hearing-stage').val(),
+                    caseNumber: $('#hearing-case-number').val(),
+                    cnrNumber: $('#hearing-cnr-number').val()
+                };
+
+                console.log("Payload being sent via AJAX:", formData);
+
+                $.ajax({
+                    url: webAppUrl + "?action=getTodayCases",
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json', // Ensures jQuery expects a JSON response back
+                    success: function (response) {
+                        console.log("Success response:", response);
+                        alert('Hearing notes saved successfully to the notes tab!');
+
+                        // Clear form fields after successful save
+                        $('#hearing-next-date').val('');
+                        $('#hearing-business').val('');
+                        $('#hearing-stage').val('');
+                        $('#hearing-case-number').val('');
+                        $('#hearing-cnr-number').val('');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error Status:", status);
+                        console.error("AJAX Error Details:", error);
+                        console.error("Server Response Text:", xhr.responseText);
+                        alert('Failed to save notes. Check console for details.');
+                    }
+                });
+            });
+
+            // Manual refresh button trigger for Upcoming Cases
+            $(document).on('click', '#refresh-upcoming-btn', function () {
+                loadUpcomingCases();
+            });
+        });
+
+        // Function to fetch and render upcoming cases
+        function loadUpcomingCases() {
+            const $tbody = $('#upcoming-cases-tbody');
+
+            // Show Loading Spinner state inside the table
+            $tbody.html(`
+                <tr>
+                  <td colspan="4" class="p-6 text-center text-blue-500">
+                    <div class="flex justify-center items-center gap-2">
+                      <svg class="animate-spin h-5 w-5 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                      </svg>
+                      <span>Fetching cases from sheet...</span>
+                    </div>
+                  </td>
+                </tr>
+            `);
+
+            // Fetch live notes from the Google Sheet via AJAX
+            $.ajax({
+                url: webAppUrl + '?action=getUpcomingCases', // Action trigger for Apps Script backend
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (!response || !response.data || response.data.length === 0) {
+                        $tbody.html(`
+                            <tr>
+                              <td colspan="4" class="p-6 text-center text-gray-500">No upcoming cases found.</td>
+                            </tr>
+                        `);
+                        return;
+                    }
+
+                    // Calculate date range: Today to Today + 7 days (Total 8 days)
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+
+                    const maxDate = new Date(today);
+                    maxDate.setDate(today.getDate() + 7); // Covers today through 7 days out
+                    maxDate.setHours(23, 59, 59, 999);
+
+                    // Filter rows within 8-day window
+                    let filteredCases = response.data.filter(item => {
+                        if (!item.nextDate) return false;
+                        const caseDate = new Date(item.nextDate);
+                        return caseDate >= today && caseDate <= maxDate;
+                    });
+
+                    console.log(response.data);
+                    console.log(filteredCases);
+                    if (filteredCases.length === 0) {
+                        $tbody.html(`
+                            <tr>
+                              <td colspan="4" class="p-6 text-center text-gray-500">No cases scheduled within the next 8 days.</td>
+                            </tr>
+                        `);
+                        return;
+                    }
+
+                    // Render filtered rows with 1-based sequential S.No.
+                    let rowsHtml = '';
+                    filteredCases.forEach((item, index) => {
+                        rowsHtml += `
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
+                              <td class="p-3 text-center font-semibold text-gray-500 dark:text-gray-400">${index + 1}</td>
+                              <td class="p-3 font-medium text-blue-600 dark:text-blue-400">${item.caseNumber || 'N/A'}</td>
+                              <td class="p-3">${item.stage || 'N/A'}</td>
+                              <td class="p-3 text-right font-medium text-gray-800 dark:text-gray-200">${item.nextDate}</td>
+                            </tr>
+                        `;
+                    });
+
+                    $tbody.html(rowsHtml);
+                },
+                error: function () {
+                    $tbody.html(`
+                        <tr>
+                          <td colspan="4" class="p-6 text-center text-red-500">Failed to load data. Please check connection.</td>
+                        </tr>
+                    `);
+                }
+            });
+        }
+
+        // Fetch preloaded cases for today's date from the "hearing dates" tab
+        function fetchTodayHearingNotesData() {
+            $.ajax({
+                url: webAppUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.result === 'success' && response.data.length > 0) {
+                        todayHearingData = response.data;
+                        populateDropdowns(todayHearingData);
+                    } else {
+                        console.log("No hearing entries found for today.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to fetch preloaded hearing details:", error);
+                }
+            });
+        }
+
+        // Populate dropdown options where value and text match identically
+        function populateDropdowns(data) {
+            var $caseSelect = $('#hearing-case-number');
+            var $cnrSelect = $('#hearing-cnr-number');
+
+            // Clear options except the first placeholder
+            $caseSelect.find('option:not(:first)').remove();
+            $cnrSelect.find('option:not(:first)').remove();
+
+            data.forEach(function (item) {
+                if (item.caseNumber) {
+                    $caseSelect.append(`<option value="${item.caseNumber}">${item.caseNumber}</option>`);
+                }
+                if (item.cnrNumber) {
+                    $cnrSelect.append(`<option value="${item.cnrNumber}">${item.cnrNumber}</option>`);
+                }
+            });
+        }
+
+        // Two-way sync: Selecting Case Number auto-selects CNR Number
+        $(document).on('change', '#hearing-case-number', function () {
+            var selectedCase = $(this).val();
+            var match = todayHearingData.find(item => item.caseNumber === selectedCase);
+
+            if (match) {
+                $('#hearing-cnr-number').val(match.cnrNumber);
+            } else {
+                $('#hearing-cnr-number').val('');
+            }
+        });
+
+        // Two-way sync: Selecting CNR Number auto-selects Case Number
+        $(document).on('change', '#hearing-cnr-number', function () {
+            var selectedCnr = $(this).val();
+            var match = todayHearingData.find(item => item.cnrNumber === selectedCnr);
+
+            if (match) {
+                $('#hearing-case-number').val(match.caseNumber);
+            } else {
+                $('#hearing-case-number').val('');
+            }
+        });
+    </script>
+</body>
+
+</html>
