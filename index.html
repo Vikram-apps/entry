@@ -162,10 +162,16 @@
             class="tab-content hidden p-6 max-w-4xl mx-auto bg-white rounded-xl shadow-md space-y-4">
             <div class="flex items-center justify-between border-b border-gray-200 pb-3">
                 <h2 class="text-2xl font-bold text-gray-800">Upcoming Cases (Next 8 Days)</h2>
-                <button type="button" id="refresh-upcoming-btn"
-                    class="text-sm bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-md hover:bg-indigo-100 transition font-medium">
-                    🔄 Refresh
-                </button>
+                <div class="flex items-center space-x-2">
+                    <button type="button" id="copy-cases-btn"
+                        class="text-sm bg-gray-50 text-gray-700 px-3 py-1.5 rounded-md hover:bg-gray-100 transition font-medium border border-gray-200">
+                        📋 Copy Text
+                    </button>
+                    <button type="button" id="refresh-upcoming-btn"
+                        class="text-sm bg-indigo-50 text-indigo-600 px-3 py-1.5 rounded-md hover:bg-indigo-100 transition font-medium">
+                        🔄 Refresh
+                    </button>
+                </div>
             </div>
 
             <div class="overflow-x-auto rounded-md border border-gray-200">
