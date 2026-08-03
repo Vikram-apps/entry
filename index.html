@@ -392,24 +392,9 @@
                         return;
                     }
 
-                    // Calculate date range: Today to Today + 7 days (Total 8 days)
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-
-                    const maxDate = new Date(today);
-                    maxDate.setDate(today.getDate() + 7); // Covers today through 7 days out
-                    maxDate.setHours(23, 59, 59, 999);
-
-                    // Filter rows within 8-day window
-                    let filteredCases = response.data.filter(item => {
-                        if (!item.nextDate) return false;
-                        const caseDate = new Date(item.nextDate);
-                        return caseDate >= today && caseDate <= maxDate;
-                    });
-
                     console.log(response.data);
-                    console.log(filteredCases);
-                    if (filteredCases.length === 0) {
+
+                    if (response.data.length === 0) {
                         $tbody.html(`
                             <tr>
                               <td colspan="4" class="p-6 text-center text-gray-500">No cases scheduled within the next 8 days.</td>
@@ -420,7 +405,7 @@
 
                     // Render filtered rows with 1-based sequential S.No.
                     let rowsHtml = '';
-                    filteredCases.forEach((item, index) => {
+                    response.data.forEach((item, index) => {
                         rowsHtml += `
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
                               <td class="p-3 text-center font-semibold text-gray-500 dark:text-gray-400">${index + 1}</td>
