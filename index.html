@@ -204,6 +204,9 @@
         // Global cache for today's hearing rows to handle two-way lookup
         var todayHearingData = [];
 
+        // Global store for upcoming cases to support clipboard copying
+        var upcomingCasesData = [];
+
         // Variable to store Google Apps Script Web App URL (Single Source of Truth)
         const webAppUrl = 'https://script.google.com/macros/s/AKfycbx5WkdJ4Cwh9btsSkg5a-WAgzYD_ZHYtiIiBMWS9dGiI2DuxD9Ty3a5g_WxU9PHH8qpMQ/exec';
 
@@ -362,6 +365,44 @@
             $(document).on('click', '#refresh-upcoming-btn', function () {
                 loadUpcomingCases();
             });
+
+            // Copy Upcoming Cases Table Text Button Click Handler
+            $(document).on('click', '#copy-cases-btn', function () {
+                if (!upcomingCasesData || upcomingCasesData.length === 0) {
+                    alert('No upcoming cases available to copy.');
+                    return;
+                }
+
+                // Group items by nextDate
+                const grouped = {};
+                upcomingCasesData.forEach(item => {
+                    const dateKey = item.nextDate || 'Unscheduled';
+                    if (!grouped[dateKey]) {
+                        grouped[dateKey] = [];
+                    }
+                    grouped[dateKey].push(item);
+                });
+
+                // Sort the unique dates in ascending order
+                const sortedDates = Object.keys(grouped).sort((a, b) => new Date(a) - new Date(b));
+
+                let clipboardText = '';
+
+                sortedDates.forEach((dateStr) => {
+                    clipboardText += `📅 ${dateStr}\n`;
+                    grouped[dateStr].forEach((caseItem, idx) => {
+                        clipboardText += `  ${idx + 1}. Case No: ${caseItem.caseNumber || 'N/A'} | Stage: ${caseItem.stage || 'N/A'}\n`;
+                    });
+                    clipboardText += '\n';
+                });
+
+                navigator.clipboard.writeText(clipboardText.trim()).then(() => {
+                    alert('Upcoming cases copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    alert('Failed to copy text to clipboard.');
+                });
+            });
         });
 
         // Function to fetch and render upcoming cases
@@ -390,6 +431,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if (!response || !response.data || response.data.length === 0) {
+                        upcomingCasesData = [];
                         $tbody.html(`
                             <tr>
                               <td colspan="4" class="p-6 text-center text-gray-500">No upcoming cases found.</td>
@@ -398,20 +440,14 @@
                         return;
                     }
 
-                    console.log(response.data);
+                    // Cache the fetched data globally for the copy function
+                    upcomingCasesData = response.data;
 
-                    if (response.data.length === 0) {
-                        $tbody.html(`
-                            <tr>
-                              <td colspan="4" class="p-6 text-center text-gray-500">No cases scheduled within the next 8 days.</td>
-                            </tr>
-                        `);
-                        return;
-                    }
+                    console.log(upcomingCasesData);
 
                     // Render filtered rows with 1-based sequential S.No.
                     let rowsHtml = '';
-                    response.data.forEach((item, index) => {
+                    upcomingCasesData.forEach((item, index) => {
                         rowsHtml += `
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition">
                               <td class="p-3 text-center font-semibold text-gray-500 dark:text-gray-400">${index + 1}</td>
@@ -425,6 +461,7 @@
                     $tbody.html(rowsHtml);
                 },
                 error: function () {
+                    upcomingCasesData = [];
                     $tbody.html(`
                         <tr>
                           <td colspan="4" class="p-6 text-center text-red-500">Failed to load data. Please check connection.</td>
